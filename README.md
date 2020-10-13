@@ -1,3 +1,19 @@
+# Haxball ai
+
+This project is a fork of the https://github.com/vkurenkov/haxball-chameleon project.
+
+## Contribution guidelines
+
+Git commit summary template:
+```
+[cs7632] SUMMARY (Max 60 characters)
+
+Discription (Max 90 characters in a line)
+Testcase and results (if applicable)
+```
+
+Please continue reading for the original Repo's Readme
+
 # Haxball Chameleon
 <p align="center">
   <img src="https://github.com/vkurenkov/haxball-imitator/blob/master/haxball-big-min.png">
