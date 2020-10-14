@@ -2,6 +2,9 @@
 
 This project is a fork of the https://github.com/vkurenkov/haxball-chameleon project.
 
+## Decision strategy
+[Link](decision_logic/1v1/candidates/unified-fsm.png) to the decision strategy png
+
 ## Contribution guidelines
 
 Git commit summary template:
