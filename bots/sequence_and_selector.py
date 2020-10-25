@@ -24,7 +24,10 @@ class Sequence(BTNode):
         if cIndex >= len(self.children):
             return True
 
-        childRet = self.children[cIndex].execute(delta)
+        print("children: {}".format(self.children))
+        print("Current {}: {}".format(self.id, self.current));
+        childRet = self.children[cIndex].execute()
+        print("Child {} returned {}".format(self.children[cIndex].id, childRet))
         if childRet == False:
             self.current = 0;
             return False;
@@ -64,7 +67,7 @@ class Selector(BTNode):
         if cIndex >= len(self.children):
             return False
 
-        childRet = self.children[cIndex].execute(delta)
+        childRet = self.children[cIndex].execute()
         if childRet == True:
             self.current = 0;
             return True;
