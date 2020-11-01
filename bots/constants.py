@@ -9,3 +9,5 @@ locations = {
     "btg"    : [ 370, -55 ],
     "bbg"    : [ 370, 55  ],
 }
+
+bot_size = 10
