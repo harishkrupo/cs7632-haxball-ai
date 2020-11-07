@@ -29,7 +29,52 @@ class Strategy():
         # self.spec = [(Sequence, "sequence"), (Chase, "Chaser"), (Align, "Aligner")]
         # self.spec = [(Chase, "Chaser")]
         # self.spec = [MoveToOpponentSideAction] [(MoveBetweenOpponentAndGoal, 0.75)] [MoveToOpponentSideAction] [SideOfTheFieldDaemon] [ClearPathToGoalDaemon] -- EXAMPLE ONLY
-        self.spec = [Selector, [(BallPossession, "our_ball_possession", BOT_TEAM, True), [Selector, [ClearPathToGoalDaemon, [Selector, [SideOfTheFieldDaemon, [Sequence, [Align, Shoot]]]], MoveToOpponentSideAction], [Selector, [(DistanceFromOpponent, "shoot_at_wall_daemon", BOT_TEAM, 100), ShootAtWall], [Sequence, Align, MoveTowardsOpponentGoal]]]], [Selector, [(BallPossession, "enemy_ball_possession", ENEMY_TEAM, False), [Selector, [SideOfTheFieldDaemon, (MoveBetweenOpponentAndGoal, 0.75)], [Sequence, MoveCloseToOpponent, SlightlyDeviate, Chase]]], [Selector, [(ClosestTeamToBall, "we_are_close", BOT_TEAM), [Selector, [RetreatToGetPossession, MoveMiddleOfGoal], Chase]], [Selector, [(DistanceFromOpponent, "distance", BOT_TEAM, 100), [Selector, [RetreatToGetPossession, [Sequence, Chase, ShootAtWall]], [Sequence, Chase, Shoot]]], [Sequence, Chase, FaceOpponentGoal]]]]]
+        self.spec = [Selector,
+            [(BallPossession, "our_ball_possession", BOT_TEAM, True),
+                [Selector,
+                    [ClearPathToGoalDaemon,
+                        [Selector,
+                            [SideOfTheFieldDaemon,
+                                [Sequence,
+                                    [Align, Shoot]
+                                ]
+                            ]
+                        ],
+                        MoveToOpponentSideAction
+                    ],
+                    [Selector,
+                        [(DistanceFromOpponent, "shoot_at_wall_daemon", BOT_TEAM, 100), ShootAtWall],
+                        [Sequence, Align, MoveTowardsOpponentGoal]
+                    ]
+                ]
+            ],
+            [Selector,
+                [(BallPossession, "enemy_ball_possession", ENEMY_TEAM, False),
+                    [Selector,
+                        [SideOfTheFieldDaemon, (MoveBetweenOpponentAndGoal, 0.75)],
+                        [Sequence, MoveCloseToOpponent, SlightlyDeviate, Chase]
+                    ]
+                ],
+                [Selector,
+                    [(ClosestTeamToBall, "we_are_close", BOT_TEAM),
+                        [Selector,
+                            [RetreatToGetPossession, MoveMiddleOfGoal], Chase
+                        ]
+                    ],
+                    [Selector,
+                        [(DistanceFromOpponent, "distance", BOT_TEAM, 100),
+                            [Selector,
+                                [RetreatToGetPossession,
+                                    [Sequence, Chase, ShootAtWall]
+                                ],
+                                [Sequence, Chase, Shoot]
+                            ]
+                        ],
+                        [Sequence, Chase, FaceOpponentGoal]
+                    ]
+                ]
+            ]
+        ]
 
     def getStrategy(self):
         return self.spec
