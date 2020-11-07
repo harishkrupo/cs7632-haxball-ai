@@ -3,7 +3,7 @@ from replay import *
 import numpy as np
 
 
-class ClosestTeamToBall(BTNode):
+class DistanceFromOpponent(BTNode):
     def parseArgs(self, args):
         if len(args) > 0:
             self.id = args[0]
