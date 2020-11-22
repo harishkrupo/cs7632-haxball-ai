@@ -8,9 +8,11 @@ class MoveBetweenOpponentAndGoal(BTNode):
 	# for example, if self.percentage = 0.75, the ball is at (2, 0), and the middle of our goal is at (370, 0), we should tell the player to move to (278, 0)
 
 	def parseArgs(self, args):
-		self.percentage = args[0]
 		if len(args) > 1:
-			self.id = args[1]
+			self.id = args[0]
+			self.percentage = args[1]
+		else:
+			self.percentage = args[0]
 
 	def execute(self, delta = 0):
 		BTNode.execute(self)

@@ -1,5 +1,6 @@
 from bots.btnode import BTNode
 from replay import *
+from bots.utils import distance
 
 class Shoot(BTNode):
     def execute(self):
@@ -27,10 +28,19 @@ class Shoot(BTNode):
                 inputs.append(Input.Down if py < by else Input.Up)
                 ret = False
 
-            if ret:
+            dist_bg = distance((px, py), (-370, 0))
+            dist_pg = distance((bx, by), (-370, 0))
+
+            if dist_bg > dist_pg:
+                if not ret:
+                    ret = None
+                else:
+                    ret = False
+
+            if ret and dist_bg < dist_pg:
                 inputs.append(Input.Kick)
 
             gameworld.setInput(*inputs)
-            return True
+            return ret
         return None
 

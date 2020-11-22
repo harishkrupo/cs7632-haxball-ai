@@ -29,48 +29,123 @@ class Strategy():
         # self.spec = [(Sequence, "sequence"), (Chase, "Chaser"), (Align, "Aligner")]
         # self.spec = [(Chase, "Chaser")]
         # self.spec = [MoveToOpponentSideAction] [(MoveBetweenOpponentAndGoal, 0.75)] [MoveToOpponentSideAction] [SideOfTheFieldDaemon] [ClearPathToGoalDaemon] -- EXAMPLE ONLY
-        self.spec = [Selector,
-            [(BallPossession, "our_ball_possession", BOT_TEAM, True),
-                [Selector,
-                    [ClearPathToGoalDaemon,
-                        [Selector,
-                            [SideOfTheFieldDaemon,
-                                [Sequence,
-                                    [Align, Shoot]
-                                ]
+        self.spec = [
+            Selector,
+            [
+                Sequence,
+                (BallPossession, "g1 Our ball possession", BOT_TEAM, True),
+                [
+                    (ClearPathToGoalDaemon, "g2 Clear path to goal"),
+                    [
+                        (SideOfTheFieldDaemon, "g3 Side of the field daemon"),
+                        [
+                            Sequence,
+                            [
+                                (Align, "g4 Align"),
+                                (Shoot, "g5 Shoot"),
+                                # (Shoot, "g5 Shoot"),
+                                # (Shoot, "g5 Shoot"),
+                                # (Shoot, "g5 Shoot"),
+                                # (Shoot, "g5 Shoot")
                             ]
                         ],
-                        MoveToOpponentSideAction
+                        (MoveToOpponentSideAction, "g6 Move to opponent side action")
                     ],
-                    [Selector,
-                        [(DistanceFromOpponent, "shoot_at_wall_daemon", BOT_TEAM, 100), ShootAtWall],
-                        [Sequence, Align, MoveTowardsOpponentGoal]
+                    [
+                        Selector,
+                        [
+                            Sequence,
+                            (DistanceFromOpponent, "g7 Shoot at wall daemon", BOT_TEAM, 100),
+                            (ShootAtWall, "g8 Shoot at wall")
+                        ],
+                        [
+                            Sequence,
+                            (Align, "g9 Align"),
+                            (MoveTowardsOpponentGoal, "g10 Move towards opponent goal")
+                        ]
                     ]
                 ]
             ],
-            [Selector,
-                [(BallPossession, "enemy_ball_possession", ENEMY_TEAM, False),
-                    [Selector,
-                        [SideOfTheFieldDaemon, (MoveBetweenOpponentAndGoal, 0.75)],
-                        [Sequence, MoveCloseToOpponent, SlightlyDeviate, Chase]
+            [
+                Selector,
+                [
+                    Sequence,
+                    (BallPossession, "g11 Enemy ball possession", ENEMY_TEAM, False),
+                    [
+                        Selector,
+                        [
+                            Sequence,
+                            (SideOfTheFieldDaemon, "g12 Side of the field daemon"),
+                            (MoveBetweenOpponentAndGoal, "g13 Move between opponent and goal", 0.75)
+                        ],
+                        [
+                            Sequence,
+                            (MoveCloseToOpponent, "g14 Move close to opponent"),
+                            (SlightlyDeviate, "g15 Slightly deviate"),
+                            (Chase, "g16 Chase")
+                        ]
                     ]
                 ],
-                [Selector,
-                    [(ClosestTeamToBall, "we_are_close", BOT_TEAM),
-                        [Selector,
-                            [RetreatToGetPossession, MoveMiddleOfGoal], Chase
+                [
+                    Selector,
+                    [
+                        Sequence,
+                        (ClosestTeamToBall, "g17 Closest team to ball is us", BOT_TEAM),
+                        [
+                            Selector,
+                            [
+                                Sequence,
+                                (RetreatToGetPossession, "g18 Retreat to get possession"),
+                                (MoveMiddleOfGoal, "g19 Move middle of the goal")
+                            ],
+                            [
+                                Sequence,
+                                (Chase, "g20 Chase"),
+                                (Shoot, "g5 Shoot"),
+                                # (Shoot, "g5 Shoot"),
+                                # (Shoot, "g5 Shoot"),
+                                # (Shoot, "g5 Shoot"),
+                                # (Shoot, "g5 Shoot")
+                            ]
                         ]
                     ],
-                    [Selector,
-                        [(DistanceFromOpponent, "distance", BOT_TEAM, 100),
-                            [Selector,
-                                [RetreatToGetPossession,
-                                    [Sequence, Chase, ShootAtWall]
+                    [
+                        Selector,
+                        [
+                            Sequence,
+                            (DistanceFromOpponent, "g21 Distance from opponent", BOT_TEAM, 100),
+                            [
+                                Selector,
+                                [
+                                    Sequence,
+                                    (RetreatToGetPossession, "g22 Retreat to get possession"),
+                                    [
+                                        Sequence,
+                                        (Chase, "g23 Chase"),
+                                        (ShootAtWall, "g24 Shoot at wall")
+                                    ]
                                 ],
-                                [Sequence, Chase, Shoot]
+                                [
+                                    Sequence,
+                                    (Chase, "g25 Chase"),
+                                    (Shoot, "g5 Shoot"),
+                                    # (Shoot, "g5 Shoot"),
+                                    # (Shoot, "g5 Shoot"),
+                                    # (Shoot, "g5 Shoot"),
+                                    # (Shoot, "g5 Shoot")
+                                ]
                             ]
                         ],
-                        [Sequence, Chase, FaceOpponentGoal]
+                        [
+                            Sequence,
+                            (Chase, "g27 Chase"),
+                            (FaceOpponentGoal, "g28 Face Opponent Goal"),
+                            (Shoot, "g5 Shoot"),
+                            # (Shoot, "g5 Shoot"),
+                            # (Shoot, "g5 Shoot"),
+                            # (Shoot, "g5 Shoot"),
+                            # (Shoot, "g5 Shoot")
+                        ]
                     ]
                 ]
             ]
