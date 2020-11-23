@@ -17,13 +17,15 @@ class Shoot(BTNode):
             ydiff = abs(py - by)
 
             ret = True
-            xproximity = xdiff > 40
-            yproximity = ydiff > 40
+            xproximity = xdiff > 30
+            yproximity = ydiff > 30
             if xproximity:
+                inputs.append(Input.Kick)
                 inputs.append(Input.Right if px < bx else Input.Left)
                 ret = False
 
             if yproximity:
+                inputs.append(Input.Kick)
                 inputs.append(Input.Down if py < by else Input.Up)
                 ret = False
 

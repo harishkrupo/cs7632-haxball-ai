@@ -27,8 +27,8 @@ class Interactive:
             self.game, _ = replay._Game(msg.data, 1)
             self.player = self.game.players and next((x for x in self.game.players if x.id == self._player_id), None)
             self.onUpdate()
-            if self.input != self._sent_input:
-              await ws.send_str('%d' % self.input)
-              self._sent_input = self.input
+            # if self.input != self._sent_input:
+            await ws.send_str('%d' % self.input)
+            self._sent_input = self.input
           else:
             break

@@ -10,36 +10,53 @@ class Align(BTNode):
         if gameworld.player:
             px = gameworld.player.disc.x
             py = gameworld.player.disc.y
-
             bx = gameworld.game.ball.x
             by = gameworld.game.ball.y
+            # get opponents goal loaction
+            if gameworld.player.team == Team.Blue:
+                goal_top = locations["rtg"]
+                goal_bottom = locations["rbg"]
+            else:
+                goal_top = locations["btg"]
+                goal_bottom = locations["bbg"]
 
-            rtg = locations["rtg"]
-            rbg = locations["rbg"]
-
-            ball_top_goal_vector = [rtg[0] - bx, rtg[1] - by]
-            ball_bottom_goal_vector = [rbg[0] - bx, rbg[1] - by]
+            ball_top_goal_vector = [goal_top[0] - bx, goal_top[1] - by]
+            ball_bottom_goal_vector = [goal_bottom[0] - bx, goal_bottom[1] - by]
             player_ball_vector = [px - bx, py - by]
-
-            pbv_btg = np.cross(player_ball_vector, ball_top_goal_vector) > 0
-            pbv_bbg = np.cross(player_ball_vector, ball_bottom_goal_vector) > 0
+            playerball_cross_topgoalball = np.cross(player_ball_vector, ball_top_goal_vector)
+            playerball_cross_bottomgoalball = np.cross(player_ball_vector, ball_bottom_goal_vector)
+            if gameworld.player.team == Team.Blue:
+                playerball_cross_topgoalball = playerball_cross_topgoalball > 0
+                playerball_cross_bottomgoalball = playerball_cross_bottomgoalball > 0
+            else:
+                playerball_cross_topgoalball = playerball_cross_topgoalball < 0
+                playerball_cross_bottomgoalball = playerball_cross_bottomgoalball < 0
 
             inputs = []
 
-            print(pbv_btg, pbv_bbg)
+            print(playerball_cross_topgoalball, playerball_cross_bottomgoalball)
             ret = True
-            if not (rtg[0] < bx < px):
-                inputs.append(Input.Right)
-                ret = False
-
-            if pbv_btg and pbv_bbg:
+            if gameworld.player.team == Team.Blue:
+                if not (goal_top[0] < bx < px):
+                    inputs.append(Input.Right)
+                    ret = False
+            elif gameworld.player.team == Team.Red:
+                if not (goal_top[0] > bx > px):
+                    inputs.append(Input.Left)
+                    ret = False
+            elif playerball_cross_topgoalball and playerball_cross_bottomgoalball:
                 inputs.append(Input.Up)
                 ret = False
-            elif (not pbv_btg) and (not pbv_bbg):
+            elif (not playerball_cross_topgoalball) and (not playerball_cross_bottomgoalball):
                 inputs.append(Input.Down)
                 ret = False
 
             gameworld.setInput(*inputs)
+
+            if ret:
+                inputs.append(Input.Kick)
+                gameworld.setInput(*inputs)
+                # print("Align Successful==================================")
             return ret
         return None
 
