@@ -27,11 +27,19 @@ class Strategy():
     def __init__(self):
         # self.spec = [(Sequence, "sequence"), (Chase, "Chaser"), (Align, "Aligner"), (Shoot, "Shooter")]
 
-        self.spec = [
+        self.hybrid_spec = [
             [Selector,
                 [(Sequence, "defense_selector"), (BallPossession, "enemy_ball_possession", ENEMY_TEAM, False), (SideOfTheFieldDaemon, False, "side_of_field"), (MoveBetweenOpponentAndGoal, 0.5, "move_between_opponent_and_goal")],
                 [(Sequence, "sequence"), (Chase, "Chaser"), (Align, "Aligner"), (Shoot, "Shooter")]
             ]
+        ]
+
+        self.defend_spec = [
+            (Sequence), (MoveBetweenOpponentAndGoal, 0.75, "move_between_opponent_and_goal"), (Shoot, "Shooter")
+        ]
+
+        self.attack_spec = [
+            (Sequence, "sequence"), (Chase, "Chaser"), (Align, "Aligner"), (Shoot, "Shooter")
         ]
 
         # self.spec = [(Sequence, "sequence"), (Chase, "Chaser"), (Align, "Aligner")]
@@ -84,5 +92,11 @@ class Strategy():
         #     ]
         # ]
 
-    def getStrategy(self):
-        return self.spec
+    def getHybridStrategy(self):
+        return self.hybrid_spec
+
+    def getDefendStrategy(self):
+        return self.defend_spec
+
+    def getAttackStrategy(self):
+        return self.attack_spec
