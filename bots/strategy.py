@@ -25,7 +25,15 @@ ENEMY_TEAM = replay.Team.Blue
 
 class Strategy():
     def __init__(self):
-        self.spec = [(Sequence, "sequence"), (Chase, "Chaser"), (Align, "Aligner"), (Shoot, "Shooter")]
+        # self.spec = [(Sequence, "sequence"), (Chase, "Chaser"), (Align, "Aligner"), (Shoot, "Shooter")]
+
+        self.spec = [
+            [Selector,
+                [(Sequence, "defense_selector"), (BallPossession, "enemy_ball_possession", ENEMY_TEAM, False), (SideOfTheFieldDaemon, False, "side_of_field"), (MoveBetweenOpponentAndGoal, 0.75, "move_between_opponent_and_goal")],
+                [(Sequence, "sequence"), (Chase, "Chaser"), (Align, "Aligner"), (Shoot, "Shooter")]
+            ]
+        ]
+
         # self.spec = [(Sequence, "sequence"), (Chase, "Chaser"), (Align, "Aligner")]
         # self.spec = [(Chase, "Chaser")]
         # self.spec = [MoveToOpponentSideAction] [(MoveBetweenOpponentAndGoal, 0.75)] [MoveToOpponentSideAction] [SideOfTheFieldDaemon] [ClearPathToGoalDaemon] -- EXAMPLE ONLY

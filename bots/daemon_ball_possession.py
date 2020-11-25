@@ -15,7 +15,7 @@ class BallPossession(BTNode):
         BTNode.execute(self)
         gameworld = self.agent
         if gameworld.player:
-            t = 36
+            t = 76
             player = gameworld.player
             game = gameworld.game
             pteam = player.team
@@ -29,6 +29,7 @@ class BallPossession(BTNode):
                 ydiff = abs(py - by)
                 dist = np.sqrt(xdiff ** 2 + ydiff ** 2)
                 if pteam == self.team and dist < t:
+                    print("OUR TEAM POSSESSION")
                     return True
             else:
                 enemy_player = [
@@ -42,6 +43,7 @@ class BallPossession(BTNode):
                 ydiff = abs(py - by)
                 dist = np.sqrt(xdiff ** 2 + ydiff ** 2)
                 if pteam != self.team and dist < t:
+                    print("ENEMY TEAM POSSESSION")
                     return True
 
             return False

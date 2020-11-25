@@ -51,7 +51,7 @@ class MoveBetweenOpponentAndGoal(BTNode):
 				inputs.append(replay.Input.Down)
 
 			self.agent.setInput(*inputs)
-			return None
+			return True
 		return True
 
 def get_destination_coordinate(ball_pos, goal_pos):
