@@ -15,7 +15,7 @@ class BallPossession(BTNode):
         BTNode.execute(self)
         gameworld = self.agent
         if gameworld.player:
-            t = 76
+            t = 90
             player = gameworld.player
             game = gameworld.game
             pteam = player.team

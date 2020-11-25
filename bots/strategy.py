@@ -29,7 +29,7 @@ class Strategy():
 
         self.spec = [
             [Selector,
-                [(Sequence, "defense_selector"), (BallPossession, "enemy_ball_possession", ENEMY_TEAM, False), (SideOfTheFieldDaemon, False, "side_of_field"), (MoveBetweenOpponentAndGoal, 0.75, "move_between_opponent_and_goal")],
+                [(Sequence, "defense_selector"), (BallPossession, "enemy_ball_possession", ENEMY_TEAM, False), (SideOfTheFieldDaemon, False, "side_of_field"), (MoveBetweenOpponentAndGoal, 0.5, "move_between_opponent_and_goal")],
                 [(Sequence, "sequence"), (Chase, "Chaser"), (Align, "Aligner"), (Shoot, "Shooter")]
             ]
         ]
