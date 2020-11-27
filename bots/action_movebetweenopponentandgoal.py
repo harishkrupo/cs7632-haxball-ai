@@ -17,7 +17,7 @@ class MoveBetweenOpponentAndGoal(BTNode):
 		player = self.agent.player
 		game = self.agent.game
 		ball = game.ball
-		enemy_player = [game_player for game_player in game.players if not game_player.team == player.team][0] if game.players else None
+		enemy_player = [game_player for game_player in game.players if not game_player.team == player.team][0] if player and game.players else None
 
 		if player and enemy_player:
 			# our goal's coordinates
