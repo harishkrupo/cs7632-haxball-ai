@@ -34,7 +34,7 @@ class Align(BTNode):
 
             inputs = []
 
-            print(playerball_cross_topgoalball, playerball_cross_bottomgoalball)
+            # print(playerball_cross_topgoalball, playerball_cross_bottomgoalball)
             ret = True
             if gameworld.player.team == Team.Blue:
                 if not (goal_top[0] < bx < px):

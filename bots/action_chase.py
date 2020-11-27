@@ -4,10 +4,18 @@ import numpy as np
 from bots.constants import locations
 
 class Chase(BTNode):
+    def enter(self):
+        self.current_kick_count = 0
+        self.interval_between_kicks = 100 - 100 * self.agent.get_difficulty()
+
     def execute(self):
         BTNode.execute(self)
         gameworld = self.agent
         if gameworld.player:
+            if self.current_kick_count >= self.interval_between_kicks:
+                self.current_kick_count = -1
+            self.current_kick_count += 1
+
             t = 36
             px = gameworld.player.disc.x
             py = gameworld.player.disc.y
@@ -49,21 +57,26 @@ class Chase(BTNode):
                     if (goal_top[0] < bx < px) and (
                         playerball_cross_bottomgoalball != playerball_cross_topgoalball
                     ):
-                        inputs.append(replay.Input.Kick)
+                        if self.current_kick_count <= 0:
+                            inputs.append(replay.Input.Kick)
+
                 elif gameworld.player.team == replay.Team.Red:
                     if (goal_top[0] > bx > px) and (
                         playerball_cross_bottomgoalball != playerball_cross_topgoalball
                     ):
-                        inputs.append(replay.Input.Kick)
+                        if self.current_kick_count <= 0:
+                            inputs.append(replay.Input.Kick)
+
                 gameworld.setInput(*inputs)
                 return True
             xproximity = xdiff > 10
             yproximity = ydiff > 10
-            if xproximity and gameworld.should_act():
-                    inputs.append(replay.Input.Right if px < bx else replay.Input.Left)
 
-            if yproximity and gameworld.should_act():
-                    inputs.append(replay.Input.Down if py < by else replay.Input.Up)
+            if xproximity:
+                inputs.append(replay.Input.Right if px < bx else replay.Input.Left)
+
+            if yproximity:
+                inputs.append(replay.Input.Down if py < by else replay.Input.Up)
 
             gameworld.setInput(*inputs)
             return None
