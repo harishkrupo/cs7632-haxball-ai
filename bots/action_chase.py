@@ -3,7 +3,6 @@ import replay
 import numpy as np
 from bots.constants import locations
 
-
 class Chase(BTNode):
     def execute(self):
         BTNode.execute(self)
@@ -60,11 +59,11 @@ class Chase(BTNode):
                 return True
             xproximity = xdiff > 10
             yproximity = ydiff > 10
-            if xproximity:
-                inputs.append(replay.Input.Right if px < bx else replay.Input.Left)
+            if xproximity and gameworld.should_act():
+                    inputs.append(replay.Input.Right if px < bx else replay.Input.Left)
 
-            if yproximity:
-                inputs.append(replay.Input.Down if py < by else replay.Input.Up)
+            if yproximity and gameworld.should_act():
+                    inputs.append(replay.Input.Down if py < by else replay.Input.Up)
 
             gameworld.setInput(*inputs)
             return None

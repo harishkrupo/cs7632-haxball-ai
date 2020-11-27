@@ -1,8 +1,19 @@
 import replay
 from bots import interactive
 import inspect
+from numpy import random
 
 class BehaviourTree(interactive.Interactive):
+    def __init__(self, channel, difficulty):
+        super().__init__(channel);
+        difficulty_map = {
+            "easy": 0.3,
+            "medium": 0.7,
+            "hard": 1
+        }
+
+        self.difficulty = difficulty_map[difficulty]
+
     def buildTree(self, spec):
         self.root = buildTreeAux(spec, self)
 
@@ -12,6 +23,11 @@ class BehaviourTree(interactive.Interactive):
             self.root.reset()
         return res
 
+    def get_difficulty(self):
+        return self.difficulty
+
+    def should_act(self):
+        return random.uniform() < self.difficulty
 
 ### Parse the behavior tree symbolic specification
 def buildTreeAux(spec, agent):

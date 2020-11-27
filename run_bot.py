@@ -9,9 +9,18 @@ from bots.strategy import Strategy
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--channel", type=int, default=0, help="Different agents must be placed on different communication channels.")
-    parser.add_argument("--mode", type=str, default="hybrid", help="Bot's playing style ('defend', 'attack', or 'hybrid')")
+    parser.add_argument("--mode", type=str, default="hybrid", help="Bot's playing style ('defend', 'attack', or, 'hybrid')")
+    parser.add_argument("--difficulty", type=str, default="easy", help="Set the bot's difficulty ('easy', 'medium', or, 'hard')")
     args = parser.parse_args()
-    btree = BehaviourTree(str(args.channel));
+    modes = ['defend', 'attack', 'hybrid']
+    difficulty = ['easy', 'medium', 'hard']
+
+    if args.mode not in modes:
+        print("modes must be one of: {}".format(modes))
+    if args.difficulty not in difficulty:
+        print("difficulty must be one of: {}".format(difficulty))
+
+    btree = BehaviourTree(str(args.channel), args.difficulty);
     strategy = Strategy()
 
     if args.mode == "hybrid":
