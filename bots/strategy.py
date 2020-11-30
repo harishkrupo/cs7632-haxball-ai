@@ -17,6 +17,9 @@ from bots.action_move_close_to_opponent import MoveCloseToOpponent
 from bots.action_slightly_deviate import SlightlyDeviate
 from bots.action_move_middle_of_self_goal import MoveMiddleOfGoal
 from bots.action_face_opponent_goal import FaceOpponentGoal
+from bots.daemon_danger_to_goal import DangerToGoal
+from bots.action_just_shoot import JustShoot
+from bots.action_defender_chase import DefenderChase
 
 import replay
 
@@ -35,7 +38,20 @@ class Strategy():
         ]
 
         self.defend_spec = [
-            (Sequence), (MoveBetweenOpponentAndGoal, 0.75, "move_between_opponent_and_goal"), (Shoot, "Shooter")
+            Selector,
+            [
+                Sequence,
+                (DangerToGoal, 165, "danger_to_goal"),
+                (DefenderChase, 165, "chase"),
+                (Shoot, "shoot"),
+                (MoveMiddleOfGoal, "move_middle_of_goal")
+
+            ],
+            [
+                Sequence,
+                (MoveBetweenOpponentAndGoal, 0.75, "move_between_opponent_and_goal"),
+                (JustShoot, "Shooter")
+            ]
         ]
 
         self.attack_spec = [

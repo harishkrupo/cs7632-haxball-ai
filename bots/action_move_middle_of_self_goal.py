@@ -19,7 +19,7 @@ class MoveMiddleOfGoal(BTNode):
 
         if player:
             # TODO: calibrate
-            delta = 42
+            delta = 0
 
             player_pos = (player.disc.x, player.disc.y)
             self_goal_post_top = locations['rtg'] if player.team == replay.Team.Red else locations['btg']
@@ -43,5 +43,8 @@ class MoveMiddleOfGoal(BTNode):
                 inputs.append(replay.Input.Down if player_pos[1] < goal_middle_pos[1] else replay.Input.Up)
 
             self.agent.setInput(*inputs)
-            return None
+            if xdiff < 37 and ydiff < 37:
+                return True
+            else:
+                return None
         return False
