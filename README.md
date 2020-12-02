@@ -15,6 +15,12 @@ Discription (Max 90 characters in a line)
 Testcase and results (if applicable)
 ```
 
+## Licenses
+This work is distributed under dual - MIT and Apache 2.0 license. The original 
+work from [haxball-chameleon](https://github.com/vkurenkov/haxball-chameleon) is 
+licensed under MIT license. The rest of the source code is licensed under
+the Apache 2.0 license. Both the licenses are available in the repository.
+
 Please continue reading for the original Repo's Readme
 
 # Haxball Chameleon
